@@ -42,8 +42,8 @@ module Fluent
           ws.tags = []
           ws.onopen { |handshake|
             callback = @use_msgpack ? proc{|msg| 
-              if ( ws.tags.include? msg[0]) then
-                ws.send_binary(msg[1])   
+              if (ws.tags.empty? || (ws.tags.include? msg[0])) 
+                ws.send_binary(msg[1])  
               end
             } 
             : proc{|msg| 
