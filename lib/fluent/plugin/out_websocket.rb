@@ -47,7 +47,9 @@ module Fluent
               end
             } 
             : proc{|msg| 
-              ws.send(msg)
+              if (ws.tags.empty? || (ws.tags.include? msg[0])) 
+                ws.send(msg[1])  
+              end
             }
 
             $lock.synchronize do
